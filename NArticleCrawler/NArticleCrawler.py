@@ -126,8 +126,8 @@ for date_string, oid, article_link in all_article_links:
     text = text.strip()
 
     text = text.replace(".", ".\n")
-    text = text.replace("!", ".\n")
-    text = text.replace("?", ".\n")
+    text = text.replace("!", "!\n")
+    text = text.replace("?", "?\n")
 
     if len(text) == 0:
       print(" - No Text")
