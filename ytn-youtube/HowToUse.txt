@@ -1,0 +1,9 @@
+download youtube videos
+
+sh youtube-crawler.sh "youtube url"
+
+
+
+clean lrc files
+
+python3 LRCCleaner.py
