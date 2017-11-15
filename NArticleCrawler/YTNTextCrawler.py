@@ -18,19 +18,11 @@ from random import shuffle
 import random
 
 
-
-# In[2]:
-
-
 def find_url_from_youtube_desc(desc):
     begin = desc.find('http:')
     t = desc[begin:]
     end = t.find('\n')
     return desc[begin:begin+end]
-
-
-# In[3]:
-
 
 # queryURL = "http://www.ytn.co.kr/_ln/0101_201711080903269081"
 def find_text_ytn(queryURL):
@@ -47,9 +39,6 @@ def find_text_ytn(queryURL):
         print("error querying {} : {}".format(queryURL, e))
         return "no article_paragraph"
     return span.text
-
-
-# In[8]:
 
 
 def get_path_url_from_hash (hash):
@@ -129,8 +118,10 @@ def dump_ytn_original_scripts(dirname):
                 no_url_counts += 1
                 _text = "No URL Found:\n\n\n" + text
                 print(_text)
+                prefix += ".incomplete"
 
             f = open(os.path.join(dirname, prefix + '.txt'), "w")
+            print("saving {} ...".format(prefix + '.txt'))
             f.write(_text)
             f.close()
 
