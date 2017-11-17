@@ -18,6 +18,7 @@ from random import shuffle
 import random
 
 
+
 def find_url_from_youtube_desc(desc):
     begin = desc.find('http:')
     t = desc[begin:]
@@ -127,13 +128,46 @@ def dump_ytn_original_scripts(dirname):
 
     return no_url_counts
 
+def get_completescript_from_incomplete(dirname):
+    files = os.listdir(dirname)
+    no_url_counts = 0
+    for i, file in enumerate(files):
+        if '.incomplete.' in file:
+            prefix = file.split('.')[0]
+            queryURL = get_url_from_hash(prefix)
+            if queryURL != "":
+                _text = find_text_ytn(queryURL)
+            else:
+                no_url_counts += 1
+                _text = "No URL Found:\n\n\n" + file
+                print(_text)
+                prefix += ".incomplete-again"
 
+            f = open(os.path.join(dirname, prefix + '.txt'), "w")
+            print("saving {} ...".format(prefix + '.txt'))
+            f.write(_text)
+            f.close()
+    return no_url_counts
 # In[11]:
 
+
+
+
 import sys
-dirname = sys.argv[1]
+# dirname = sys.argv[1]
 
-if len(dirname) == 0:
-    print("error")
+import argparse
 
-print("number of files converted: {}".format(dump_ytn_original_scripts(dirname)))
+parser = argparse.ArgumentParser(description="crawling article scripts from YTN")
+parser.add_argument('--i', help='to get the script from YTN site in case no link is present')
+parser.add_argument('dirnanme', help='Name of directory to parse')
+# In[2]:
+args = parser.parse_args()
+
+if args.i:
+    print("refetching incomplete scripts")
+    dirname = args.dirnanme
+    print("number of files converted: {}".format(get_completescript_from_incomplete(dirname)))
+else:
+    dirname = args.dirnanme
+    print("number of files converted: {}".format(dump_ytn_original_scripts(dirname)))
