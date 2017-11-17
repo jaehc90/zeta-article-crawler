@@ -124,8 +124,8 @@ def dump_ytn_original_scripts(dirname):
                 print(_text)
                 postfix += ".incomplete"
 
-            f = open(os.path.join(dirname, prefix + '.txt' + postfix), "w")
-            print("saving {} ...".format(prefix + '.txt' + postfix))
+            f = open(os.path.join(dirname, prefix + '.articlebody' + postfix), "w")
+            print("saving {} ...".format(prefix + '.articlebody' + postfix))
             f.write(_text)
             f.close()
 
