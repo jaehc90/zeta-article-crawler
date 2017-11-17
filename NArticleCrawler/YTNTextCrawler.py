@@ -107,6 +107,8 @@ def dump_ytn_original_scripts(dirname):
     for i, file in enumerate(files):
         if 'description' in file:
             prefix = file.split('.')[0]
+            if os.path.isfile(os.path.join(dirname, prefix + '.txt')):
+                continue
 
             f = open(os.path.join(dirname,file), "r")
             text = f.read()
