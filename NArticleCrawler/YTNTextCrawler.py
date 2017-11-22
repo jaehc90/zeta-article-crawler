@@ -107,11 +107,14 @@ def dump_ytn_original_scripts(dirname):
     for i, file in enumerate(files):
         if 'description' in file:
             prefix = file.split('.')[0]
+            if os.path.isfile(os.path.join(dirname, prefix + '.txt')):
+                continue
 
             f = open(os.path.join(dirname,file), "r")
             text = f.read()
             f.close()
 
+            postfix = ''
             queryURL = find_url_from_youtube_desc(text)
             if queryURL != "":
                 _text = find_text_ytn(queryURL)
@@ -119,10 +122,10 @@ def dump_ytn_original_scripts(dirname):
                 no_url_counts += 1
                 _text = "No URL Found:\n\n\n" + text
                 print(_text)
-                prefix += ".incomplete"
+                postfix += ".incomplete"
 
-            f = open(os.path.join(dirname, prefix + '.txt'), "w")
-            print("saving {} ...".format(prefix + '.txt'))
+            f = open(os.path.join(dirname, prefix + '.articlebody' + postfix), "w")
+            print("saving {} ...".format(prefix + '.articlebody' + postfix))
             f.write(_text)
             f.close()
 
@@ -132,7 +135,7 @@ def get_completescript_from_incomplete(dirname):
     files = os.listdir(dirname)
     no_url_counts = 0
     for i, file in enumerate(files):
-        if '.incomplete.' in file:
+        if '.incomplete' in file:
             prefix = file.split('.')[0]
             queryURL = get_url_from_hash(prefix)
             if queryURL != "":
