@@ -81,13 +81,13 @@ english_dictionary = {
         'S': '에스',
         'francisco': '프란시스코',
         'I': '아이',
-        'III': '아이아이', ######
+        'III': '쓰리', ######
         'No joke': '노 조크',
         'BBK': '비비케이',
         'LA': '엘에이',
         'Don': '',
         't worry be happy': ' 워리 비 해피',
-        'NO': '엔오', #####
+        'NO': '넘버', #####
         'it was our sky': '잇 워즈 아워 스카이',
         'it is our sky': '잇 이즈 아워 스카이', ####
         'NEIS': '엔이아이에스', #####
@@ -151,7 +151,7 @@ english_dictionary = {
         'OECD': '오이씨디',
         'BC': '삐씨',
         'C': '씨',
-        'B': '씨',
+        'B': '삐',
         'KY': '케이와이',
         'K': '케이',
         'CEO': '씨이오',
@@ -169,4 +169,10 @@ english_dictionary = {
         'AIB': '에이아이비',
         'K': '케이',
         'PBS': '피비에스',
+        'meter': '미터',
+        'NAFTA': '나프타',
+        'GATT': '가트',
+        'APEC': '에이펙',
+        "UNESCO": "유네스코",
+        "ASEAN": "아세안"
 }

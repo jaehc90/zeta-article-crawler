@@ -207,9 +207,9 @@ count_checker = "(시|명|가지|살|마리|포기|송이|수|톨|통|점|개|�
 def normalize_unit(text, unit_to_kor2):
     # import pdb; pdb.set_trace()
     for k in unit_to_kor2.keys():
-        text = re.sub("P<number>\d* " + k + "", "\1 " + unit_to_kor2[k], text)
+        text = re.sub("(?P<number>\d*) " + k + " (?P<char>[^a-zA-Z])", "\1 " + unit_to_kor2[k] + "\2", text)
         # print (text)
-        text = re.sub("P<number>\d* " + k + "", "\1 " + unit_to_kor2[k], text)
+        text = re.sub("(?P<number>\d*) " + k + " (?P<char>[^a-zA-Z])", "\1 " + unit_to_kor2[k] + "\2", text)
         # print (text)
     return text
 
@@ -301,9 +301,6 @@ def readNumberFloat(f):
         st += readDigit(int(nums[1]))
     return st
 
-
-
-
 def number_to_korean(num_str, is_count=False):
     if is_count:
         num_str, unit_str = num_str.group(1), num_str.group(2)
@@ -352,6 +349,7 @@ def number_to_korean(num_str, is_count=False):
             tmp = []
             kor += num_to_kor2[int((size - i) / 4)]
 
+    str_kor = kor
     if is_count:
         if kor.startswith("한") and len(kor) > 1:
             kor = kor[1:]
@@ -361,8 +359,10 @@ def number_to_korean(num_str, is_count=False):
                     '|'.join(count_tenth_dict.keys()),
                     lambda x: count_tenth_dict[x.group()], kor)
     else:
-        kor = readNumber(int(digit_str))
-        # print(kor)
+        # kor = readNumber(int(digit_str))
+        str_kor = re.sub("일백", "백", str_kor)
+        str_kor = re.sub("일십", "십", str_kor)
+        kor = str_kor
 
     if not is_count and kor.startswith("일") and len(kor) > 1:
         kor = kor[1:]
@@ -415,8 +415,9 @@ if __name__ == "__main__":
     elif args.i is None or args.o is None:
         print("testing ...")
         test_normalize("JTBC는 JTBCs를 DY는 A가 Absolute")
-        test_normalize("1 m와 1m 그리고 majority 1 meter")
+        test_normalize("1 m와 1m 그리고 majority 1 meter and 1mm and 1 moment")
         test_normalize("오늘(13일) 101마리 강아지가")
+        test_normalize("-121200110001113.23232 1913년")
         test_normalize('"저돌"(猪突) 입니다.')
         test_normalize('비대위원장이 지난 1월 이런 말을 했습니다. “난 그냥 산돼지처럼 돌파하는 스타일이다”')
         test_normalize("지금은 -12.35%였고 종류는 5가지와 19가지, 그리고 55가지였다")
